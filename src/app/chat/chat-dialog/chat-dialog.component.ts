@@ -28,7 +28,7 @@ export class ChatDialogComponent implements OnInit {
     this.formValue = '';
   }
 
-  speechTotext(){
+  talk(){
    this.chat.speechToTextStart()
   }
 

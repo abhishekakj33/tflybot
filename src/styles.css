@@ -120,10 +120,13 @@ body {
 }
 .chat .chat-message {
   padding: 30px;
-  
+  position: relative;
 }
-.chat .chat-message textarea {
-  width: 80%;
+.chat .chat-message .microphone{
+  right: 35px;
+}
+.chat .chat-message input[type="text"] {
+  width: 100%;
   padding: 10px 20px;
   font: 14px/22px "Roboto", Arial, sans-serif;
   margin-bottom: 10px;
@@ -136,17 +139,17 @@ body {
   cursor: pointer;
 }
 .chat .chat-message button {
-  float: right;
   color: indigo;
-  font-size: 35px;
-  text-transform: uppercase;
-  border: 1px solid indigo;
+  font-size: 31px;
+  border: aliceblue;
   cursor: pointer;
   font-weight: bold;
-  background: #F2F5F8;
-  padding: 10px;
-  border-radius: 50%;
+  background: #fff;
+  position: absolute;
+  right: 75px;
+  top: 33px;
 }
+
 .chat .chat-message button:hover {
   color: #75b1e8;
 }

@@ -29,11 +29,14 @@
     </div> <!-- end chat-history -->
     
     <div class="chat-message clearfix chat-footer" >
-      <textarea  [(ngModel)]="formValue" (keyup.enter)="sendMessage()" type="text" name="message-to-send"  id="message-to-send" placeholder ="Flight onboarding queries or just a chit-chat" >
-        <i class="fa fa-microphone" aria-hidden="true"></i>
-        <i class="fa fa-microphone-slash" aria-hidden="true"></i>
-      </textarea>
+      <input  [(ngModel)]="formValue" (keyup.enter)="sendMessage()" type="text" name="message-to-send"  id="message-to-send" placeholder ="Flight onboarding queries or just a chit-chat" >
+        
+     
       
+      <button (click)="talk()"  class="microphone">
+            <i class="fa fa-microphone" aria-hidden="true" *ngIf="talking"></i>
+            <i class="fa fa-microphone-slash" aria-hidden="true" *ngIf="!talking"></i>
+      </button>
       <button (click)="sendMessage()"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
 
     </div> <!-- end chat-message -->
