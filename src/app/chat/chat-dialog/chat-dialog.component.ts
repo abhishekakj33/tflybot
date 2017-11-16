@@ -23,8 +23,13 @@ export class ChatDialogComponent implements OnInit {
   }
 
   sendMessage() {
+    if(this.formValue == '') return
     this.chat.converse(this.formValue);
     this.formValue = '';
+  }
+
+  speechTotext(){
+   this.chat.speechToTextStart()
   }
 
 }
