@@ -7,7 +7,7 @@ import 'rxjs/add/operator/scan';
 @Component({
   selector: 'chat-dialog',
   templateUrl: './chat-dialog.component.html',
-  styleUrls: ['./chat-dialog.component.scss']
+  styleUrls: ['./chat-dialog.component.css']
 })
 export class ChatDialogComponent implements OnInit {
 

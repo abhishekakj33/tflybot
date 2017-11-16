@@ -1,5 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
 @import url(https://fonts.googleapis.com/css?family=Roboto);
 @import url(https://cdnjs.com/libraries/normalize);
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
+html, body {
+  height: 100%;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Avoid the IE 10-11 `min-height` bug. */
+}
 
 ul,li{
     list-style: none
@@ -10,10 +20,17 @@ ul,li{
 }
 
 body {
-  background: #C5DDEB;
+  background: indigo;
   font-family:"Roboto", Arial, sans-serif;
   color: white;
-  margin: 0 0;
+}
+.content {
+  flex: 1 0 auto; /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
+  padding: 20px;
+}
+.chat-footer {
+  flex-shrink: 0; /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
+  padding: 20px;
 }
 
 .container {
@@ -22,58 +39,20 @@ body {
   
 }
 
-.people-list {
-  width: 15%;
-  float: left;
-}
-.people-list .search {
-  padding: 20px;
-}
-.people-list input {
-  border-radius: 3px;
-  border: none;
-  padding: 14px;
-  color: white;
-  background: #6A6C75;
-  width: 90%;
-  font-size: 14px;
-}
-.people-list .fa-search {
-  position: relative;
-  left: -25px;
-}
-.people-list ul {
-  padding: 20px;
-}cd 
-.people-list ul li {
-  padding-bottom: 20px;
-}
-.people-list img {
-  float: left;
-}
-.people-list .about {
-  float: left;
-  margin-top: 8px;
-}
-.people-list .about {
-  padding-left: 8px;
-}
-.people-list .status {
-  color: #92959E;
-}
-
 .chat {
   float: left;
-  background: #F2F5F8;
-  color: #434651;
-  width: 85%;
+  background: #000;
+  color: #fff;
+  width: 100%;
 }
 .chat .chat-header {
   padding: 20px;
-  border-bottom: 2px solid white;
+  border-bottom: 2px solid indigo;
 }
 .chat .chat-header img {
   float: left;
+  height: 45px;
+  width: 45px;
 }
 .chat .chat-header .chat-about {
   float: left;
@@ -95,7 +74,7 @@ body {
 }
 .chat .chat-history {
   padding: 30px 30px 20px;
-  border-bottom: 2px solid white;
+  border-bottom: 2px solid indigo;
 }
 .chat .chat-history .message-data {
   margin-bottom: 15px;
@@ -131,22 +110,24 @@ body {
   background: #86BB71;
 }
 .chat .chat-history .other-message {
-  background: #94C2ED;
+  background: indigo;
+  float: left
 }
 .chat .chat-history .other-message:after {
-  border-bottom-color: #94C2ED;
+  border-bottom-color: indigo;
   left: 93%;
+  float: left
 }
 .chat .chat-message {
   padding: 30px;
+  
 }
 .chat .chat-message textarea {
-  width: 100%;
-  border: none;
+  width: 80%;
   padding: 10px 20px;
-  font: 14px/22px "Lato", Arial, sans-serif;
+  font: 14px/22px "Roboto", Arial, sans-serif;
   margin-bottom: 10px;
- border: 1px solid #444753;
+  border: 1px solid indigo;
   resize: none;
 }
 .chat .chat-message .fa-file-o, .chat .chat-message .fa-file-image-o {
@@ -156,13 +137,15 @@ body {
 }
 .chat .chat-message button {
   float: right;
-  color: #94C2ED;
-  font-size: 16px;
+  color: indigo;
+  font-size: 35px;
   text-transform: uppercase;
-  border: none;
+  border: 1px solid indigo;
   cursor: pointer;
   font-weight: bold;
   background: #F2F5F8;
+  padding: 10px;
+  border-radius: 50%;
 }
 .chat .chat-message button:hover {
   color: #75b1e8;
@@ -174,7 +157,7 @@ body {
 }
 
 .online {
-  color: #86BB71;
+  color:indigo ;
 }
 
 .offline {
@@ -182,7 +165,7 @@ body {
 }
 
 .me {
-  color: #94C2ED;
+  color: #86BB71;
 }
 
 .align-left {
