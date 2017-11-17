@@ -3,12 +3,14 @@
 @import url(https://cdnjs.com/libraries/normalize);
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
 html, body {
-  height: 100%;
+  
 }
 body {
   display: flex;
   flex-direction: column;
-  height: 100vh; /* Avoid the IE 10-11 `min-height` bug. */
+ background: white  ;
+ padding: 0;
+ margin: 0;
 }
 
 ul,li{
@@ -20,9 +22,9 @@ ul,li{
 }
 
 body {
-  background: indigo;
+ 
   font-family:"Roboto", Arial, sans-serif;
-  color: white;
+  color: #330066;
 }
 .content {
   flex: 1 0 auto; /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
@@ -35,19 +37,19 @@ body {
 
 .container {
  
-  background: #444753;
+
   
 }
 
 .chat {
   float: left;
-  background: #000;
-  color: #fff;
+  
+  color: #330066;
   width: 100%;
 }
 .chat .chat-header {
-  padding: 20px;
-  border-bottom: 2px solid indigo;
+  padding: 5px;
+  background: #E0E0E0;
 }
 .chat .chat-header img {
   float: left;
@@ -58,35 +60,40 @@ body {
   float: left;
   padding-left: 10px;
   margin-top: 6px;
+  color: #42A5F5;
 }
 .chat .chat-header .chat-with {
   font-weight: bold;
-  font-size: 16px;
+  font-size: 14px;
 }
 .chat .chat-header .chat-num-messages {
-  color: #92959E;
+  color: #42A5F5;
+  font-size: 14px;
 }
 .chat .chat-header .fa-star {
   float: right;
-  color: #D8DADF;
+  color: #330066;
   font-size: 20px;
   margin-top: 12px;
 }
 .chat .chat-history {
-  padding: 30px 30px 20px;
-  border-bottom: 2px solid indigo;
+  padding: 0px 0px;
+  height: 86vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
 }
 .chat .chat-history .message-data {
   margin-bottom: 15px;
 }
 .chat .chat-history .message-data-time {
-  color: #a8aab1;
+  color: #212121;
   padding-left: 6px;
+  font-size: 10px;
 }
 .chat .chat-history .message {
-  color: white;
-  padding: 18px 20px;
-  line-height: 26px;
+  color: #212121;;
+  padding: 5px 10px;
+  line-height: 20px;
   font-size: 16px;
   border-radius: 7px;
   margin-bottom: 30px;
@@ -95,63 +102,67 @@ body {
 }
 .chat .chat-history .message:after {
   bottom: 100%;
-  left: 7%;
+  left: 12%;
   border: solid transparent;
   content: " ";
   height: 0;
   width: 0;
   position: absolute;
   pointer-events: none;
-  border-bottom-color: #86BB71;
+  border-bottom-color: #42A5F5;
   border-width: 10px;
   margin-left: -10px;
 }
 .chat .chat-history .my-message {
-  background: #86BB71;
+  background: #42A5F5;
+  border: 1px solid #42A5F5;
+  color: #fff;
 }
 .chat .chat-history .other-message {
-  background: indigo;
-  float: left
+  background: #E0E0E0;
+  float: left;
+  border: 1px solid #E0E0E0;
 }
 .chat .chat-history .other-message:after {
-  border-bottom-color: indigo;
-  left: 93%;
+  border-bottom-color: #E0E0E0;
+  left: 90%;
   float: left
 }
 .chat .chat-message {
-  padding: 30px;
-  position: relative;
+  padding: 5px;
+  background: #e0e0e0;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
 }
 .chat .chat-message .microphone{
-  right: 35px;
+  right: 15px;
 }
 .chat .chat-message input[type="text"] {
   width: 100%;
-  padding: 10px 20px;
+  padding: 10px 10px;
   font: 14px/22px "Roboto", Arial, sans-serif;
-  margin-bottom: 10px;
-  border: 1px solid indigo;
+  margin-bottom: 0px;
+  border: 1px solid #e0e0e0;
   resize: none;
 }
 .chat .chat-message .fa-file-o, .chat .chat-message .fa-file-image-o {
   font-size: 16px;
-  color: gray;
   cursor: pointer;
 }
 .chat .chat-message button {
-  color: indigo;
-  font-size: 31px;
+  font-size: 22px;
   border: aliceblue;
   cursor: pointer;
   font-weight: bold;
   background: #fff;
   position: absolute;
-  right: 75px;
-  top: 33px;
+  right: 51px;
+  top: 15px;
 }
 
 .chat .chat-message button:hover {
-  color: #75b1e8;
+  color: #330066;
 }
 
 .online, .offline, .me {
@@ -160,15 +171,16 @@ body {
 }
 
 .online {
-  color:indigo ;
+  color: #42A5F5 !important ;
 }
 
 .offline {
   color: #E38968;
+  display: none;
 }
 
 .me {
-  color: #86BB71;
+  color: #E0E0E0 !important;
 }
 
 .align-left {
@@ -190,4 +202,19 @@ body {
   content: " ";
   clear: both;
   height: 0;
+}
+.fa-volume-up,.fa-volume-off{
+  float: right;
+  margin: 11px 10px;
+  color: #42A5F5;
+  font-size: 22px;
+}
+
+span.message-data-name {
+  font-size: 12px;
+  color:#212121;
+}
+.fa {
+ 
+  color: #42A5F5;
 }

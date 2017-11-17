@@ -7,10 +7,11 @@
         <div class="chat-with">TflyBot</div>
         <div class="chat-num-messages">Helping Flight Onboards.</div>
       </div>
-      <i class="fa fa-star"></i>
+      <i class="fa" (click)="muted()" [ngClass]="{ 'fa-volume-up': !mute,
+      'fa-volume-off':  mute }"></i>
     </div> <!-- end chat-header -->
     
-    <div class="chat-history content">
+    <div class="chat-history content" #scrollMe (scroll)="onScroll()">
       <ul>
         <li class="clearfix" *ngFor="let message of messages | async">
           <div class="message-data"  [ngClass]="{ 'align-right': message.sentBy === 'bot'}">
@@ -29,13 +30,14 @@
     </div> <!-- end chat-history -->
     
     <div class="chat-message clearfix chat-footer" >
-      <input  [(ngModel)]="formValue" (keyup.enter)="sendMessage()" type="text" name="message-to-send"  id="message-to-send" placeholder ="Flight onboarding queries or just a chit-chat" >
+      <input  [(ngModel)]="formValue" (keyup.enter)="sendMessage()" type="text" name="message-to-send"  id="message-to-send" placeholder ="Flight onboarding queries." >
         
      
       
       <button (click)="talk()"  class="microphone">
-            <i class="fa fa-microphone" aria-hidden="true" *ngIf="talking"></i>
-            <i class="fa fa-microphone-slash" aria-hidden="true" *ngIf="!talking"></i>
+            <i  class="fa" aria-hidden="true" [ngClass]="{ 'fa-microphone-slash': !talking,
+            'fa-microphone':  talking }"></i>
+            <!-- <i class="fa fa-microphone-slash" aria-hidden="true" *ngIf="!talking"></i> -->
       </button>
       <button (click)="sendMessage()"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
 
