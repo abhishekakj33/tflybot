@@ -1,4 +1,5 @@
-import { Component, OnInit, AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, ElementRef, ViewChild, Output, EventEmitter  } from '@angular/core';
+import { FormControl , FormGroup} from '@angular/forms';
 import { ChatService, Message } from '../chat.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/scan';
@@ -10,18 +11,58 @@ import 'rxjs/add/operator/scan';
   styleUrls: ['./chat-dialog.component.css']
 })
 export class ChatDialogComponent implements OnInit {
+  @Output() seeHaro  = new EventEmitter();
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
   messages: Observable<Message[]>;
-  formValue: string;
+  chatForm = new FormGroup ({
+    userMsg: new FormControl()
+  });
   talking:boolean = false;
   mute:boolean = false;
-  disableScrollDown = false
+  disableScrollDown = false;
+  userTextAvailability = false;
+  volSupport = true;
+  speechRecog = true
   constructor(public chat: ChatService) { }
 
   ngOnInit() {
     // appends to array after each new message is added to feedSource
     this.messages = this.chat.conversation.asObservable()
         .scan((acc, val) => acc.concat(val) );
+
+    this.chatForm.controls['userMsg'].valueChanges.subscribe(txt => {
+      if(txt){
+        this.userTextAvailability = true;
+      }else{
+        this.userTextAvailability = false;
+      }
+    })    
+    this.chat.conversation.subscribe(msg => {
+      if(msg.length > 0){
+        this.seeHaro.emit("hi")
+      }
+    })
+
+    // this.messages.subscribe(msg => {
+    //   //msg[msg.length].content == 'want to see you'
+    //   if(msg.length > 0){
+    //     this.seeHaro.emit(true)
+    //   }
+    // })
+
+    if ('speechSynthesis' in window) {
+      // You're good to go!
+      this.volSupport = true;
+    } else {
+      // Ah man, speech synthesis isn't supported.
+      this.volSupport = false;
+    }
+    if ('webkitSpeechRecognition' in window) {
+       //this.upgrade();
+       this.speechRecog = true;
+    } else {
+      this.speechRecog = false;
+    }
         
   }
   ngAfterViewChecked() {
@@ -49,9 +90,14 @@ private scrollToBottom(): void {
 }
 
   sendMessage() {
-    if(this.formValue == '' || this.formValue == undefined || this.formValue == null || this.formValue.length == 0) return
-    this.chat.converse(this.formValue);
-    this.formValue = '';
+    if(this.chatForm.controls['userMsg'].value == '' || this.chatForm.controls['userMsg'].value == undefined || this.chatForm.controls['userMsg'].value == null || this.chatForm.controls['userMsg'].value.length == 0) return
+    this.chat.converse(this.chatForm.controls['userMsg'].value,this.mute);
+    this.chatForm.get('userMsg').setValue('');
+  }
+
+ 
+  muted(){
+    this.mute = !this.mute;
   }
 
   talk(){
@@ -59,9 +105,6 @@ private scrollToBottom(): void {
     if(this.talking){
       this.chat.speechToTextStart()
     }
-  }
-  muted(){
-    this.mute = !this.mute;
   }
 
 }

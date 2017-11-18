@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  haro = false;
+  seeHaro(e){
+    //console.log("e",e)
+    this.haro = true;
+  }
 }

@@ -1,5 +1,13 @@
-
-            <chat-dialog></chat-dialog>
+<div id="haro_body" *ngIf="!haro">
+    <div id="haro_jaw"></div>
+    <div id="haro_le"></div>
+    <div id="haro_re"></div>
+    <div id="reye"></div>
+    <div id="leye"></div>
+    <div id="lid"></div>
+    <div id="gas"></div>
+  </div>
+ <chat-dialog (seeHaro)="seeHaro($event)"></chat-dialog>
      
     
 

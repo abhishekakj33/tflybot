@@ -15,7 +15,7 @@ export interface IWindow extends Window {
 }
 
 const { webkitSpeechRecognition }: IWindow = <IWindow>window;
-const recognition = new webkitSpeechRecognition();
+const recognition =  webkitSpeechRecognition; 
 
 @Injectable()
 export class ChatService {
@@ -28,7 +28,7 @@ export class ChatService {
   constructor() { }
 
   // Sends and receives messages via DialogFlow
-  converse(msg: string) {
+  converse(msg: string,mute: boolean) {
     const userMessage = new Message(msg, 'user');
     this.update(userMessage);
 
@@ -36,7 +36,7 @@ export class ChatService {
       .then(res => {
         const speech = res.result.fulfillment.speech;
         const botMessage = new Message(speech, 'bot');
-        this.update(botMessage);
+        this.update(botMessage,mute);
       }, (error) => {
         new Message('Not able to connect to server', 'bot');
       });
@@ -45,18 +45,13 @@ export class ChatService {
 
 
   // Adds message to source
-  update(msg: Message) {
-    console.log("msg", msg);
-    if ('speechSynthesis' in window) {
-      // You're good to go!
-    } else {
-      // Ah man, speech synthesis isn't supported.
-    }
-    if (msg.sentBy == 'bot') {
+  update(msg: Message,mute?:boolean) {
+   
+    if (msg.sentBy == 'bot' && !mute) {
       let utterance = new SpeechSynthesisUtterance(msg.content);
       var voices = window.speechSynthesis.getVoices();
       utterance.onstart = function (event) {
-        console.log('The utterance started to be spoken.')
+        //console.log('The utterance started to be spoken.')
       };
       utterance.voice = voices.filter(function (voice) { return voice.name == 'Alex'; })[0];
 
@@ -69,11 +64,6 @@ export class ChatService {
   talking: boolean = true
   showInfo(s) {
     this.update(new Message(s,'user'))
-    // if (s) {
-    //   this.talking = true
-    // } else {
-    //   this.talking = false;
-    // }
   }
 
   upgrade() {
@@ -93,9 +83,6 @@ export class ChatService {
   }
 
   speechToTextStart() {
-    if (!('webkitSpeechRecognition' in window)) {
-      this.upgrade();
-    } else {
       var final_transcript = '';
       var recognizing = false;
       var ignore_onend;
@@ -180,7 +167,7 @@ export class ChatService {
           window.getSelection().addRange(range);
         }
       }
-    }
+    
   }
 
 }
