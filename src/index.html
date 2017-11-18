@@ -7,7 +7,131 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+<style>
+  body{
+    background: black
+  }
+  #haro_body{
+  width:150px;
+  height:150px;
+  background:radial-gradient(ellipse at center, #c4e08a 0%,#c4e08a 55%,#eef497 75%);
+  border-radius:100%;
+  position:absolute;
+  left:25%;
+  top:25%;
+  animation:myfirst 5s linear 2s infinite alternate;
+}
+
+
+@keyframes myfirst
+{
+  0%{top:130px;}
+  25%{top:100px;}
+  50%{top:130px;}
+  100%{top:100px;}
+}
+
+
+#haro_jaw{
+  width:150px;
+  height:80px;
+  border-bottom:5px solid rgb(157, 208, 81);
+  border-radius:100%;
+  position:relative;
+  top:30px;
+  left:0px;
+}
+
+
+#haro_le{
+  width:15px;
+  height:55px;
+  background:radial-gradient(ellipse at center, #9dc651 36%,#c4e08a 62%,#c4e08a 100%);
+  border-radius:100%;
+  border:2px solid rgb(157, 198, 81);
+  position:relative;
+  left:16px;
+  top:-80px;   z-index:1000;
+  transform: rotate(35deg);
+}
+
+#haro_re{
+  width:15px;
+  height:55px;
+  background:radial-gradient(ellipse at center, #9dc651 36%,#c4e08a 62%,#c4e08a 100%);
+  border-radius:100%;
+  border:2px solid rgb(157, 198, 81);
+  position:relative;
+  left:115px;
+  top:-140px; z-index:1000; 
+  transform: rotate(-35deg);
+}
+
+#leye{
+  background:radial-gradient(ellipse at center, #e2c68c 1%,#442222 62%,#442222 100%);;
+  width:10px; height:30px;
+  position:relative;
+  border-radius:100%;
+  top:-170px; left:50px;
+  box-shadow:0px 0px 3px rgba(0,0,0,0.3),0px 0px 3px rgba(0,0,0,0.3),0px 0px 3px rgba(0,0,0,0.3);
+}
+
+#reye{
+  background:radial-gradient(ellipse at center, #e2c68c 1%,#442222 62%,#442222 100%);;
+  width:10px; height:30px;
+  position:relative;
+  border-radius:100%;
+  top:-140px; left:85px;
+  box-shadow:0px 0px 3px rgba(0,0,0,0.3),0px 0px 3px rgba(0,0,0,0.3),0px 0px 3px rgba(0,0,0,0.3);
+}
+
+
+#lid{
+  width:70px;
+  height:50px;
+  background:#C4E08A;
+  z-index:100;
+  position:relative;
+  top:-250px;
+  left:40px;
+  border-radius:100%;
+  animation:wink 3s linear 0.15s infinite alternate;
+}
+
+@keyframes wink{
+  0%{top:-250px}
+  97%{top:-250px}
+  100%{top:-200px}
+}
+
+#gas{
+  width:70px;
+  height:30px;
+  border:5px solid rgba(240,255,20,0.7);
+  position:relative;
+  top:-150px;
+  left:35px;
+  border-radius:100%;
+  animation:fade 0.25s linear 0.15s infinite;
+  z-index:-5;
+}
+@keyframes fade{
+  0%{top:-180px;border:5px solid rgba(240,255,20,0.7);}
+  50%{top:-160px;border:5px solid rgba(240,255,20,0.35);}
+  100%{top:-140px;border:5px solid rgba(240,255,20,0.0);}
+}
+</style>
 <body>
-  <app-root></app-root>
+  <app-root>
+    <div id="haro_body">
+      <div id="haro_jaw"></div>
+      <div id="haro_le"></div>
+      <div id="haro_re"></div>
+      <div id="reye"></div>
+      <div id="leye"></div>
+      <div id="lid"></div>
+      <div id="gas"></div>
+    </div>
+  </app-root>
 </body>
 </html>
