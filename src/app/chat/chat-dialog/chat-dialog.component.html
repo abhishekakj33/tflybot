@@ -1,3 +1,4 @@
+<form [formGroup]="chatForm" novalidate>
 <div class="container clearfix" id="container"> 
   <div class="chat">
     <div class="chat-header clearfix">
@@ -8,7 +9,7 @@
         <div class="chat-num-messages">Helping Flight Onboards.</div>
       </div>
       <i class="fa" (click)="muted()" [ngClass]="{ 'fa-volume-up': !mute,
-      'fa-volume-off':  mute }"></i>
+      'fa-volume-off':  mute }" *ngIf="volSupport"></i>
     </div> <!-- end chat-header -->
     
     <div class="chat-history content" #scrollMe (scroll)="onScroll()">
@@ -30,21 +31,25 @@
     </div> <!-- end chat-history -->
     
     <div class="chat-message clearfix chat-footer" >
+<<<<<<< HEAD
       <input  [(ngModel)]="formValue" (keyup.enter)="sendMessage()" type="text" name="message-to-send"  id="message-to-send" placeholder ="Your flight onboarding queries." >
+=======
+      <input  formControlName="userMsg" (keyup.enter)="sendMessage()" type="text" name="message-to-send"  id="message-to-send" placeholder ="Flight onboarding queries." >
+>>>>>>> 24ea572e3db11f7d265160648a03262dc3fc1aef
         
      
       
-      <button (click)="talk()"  class="microphone">
+      <button type="button" (click)="talk()"  class="microphone" *ngIf="speechRecog">
             <i  class="fa" aria-hidden="true" [ngClass]="{ 'fa-microphone-slash': !talking,
-            'fa-microphone':  talking }"></i>
+            'fa-microphone':  talking }" *ngIf="!userTextAvailability"></i>
             <!-- <i class="fa fa-microphone-slash" aria-hidden="true" *ngIf="!talking"></i> -->
       </button>
-      <button (click)="sendMessage()"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+      <button type="button" (click)="sendMessage()"><i class="fa fa-paper-plane" aria-hidden="true" *ngIf="userTextAvailability"></i></button>
 
     </div> <!-- end chat-message -->
     
   </div> <!-- end chat -->
   
 </div> <!-- end container -->
-
+</form>
 
