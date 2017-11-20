@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ChatDialogComponent } from './chat-dialog/chat-dialog.component';
 import { ChatService } from './chat.service';
-
+import { SpeechService } from '../speech.service';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 
 
@@ -17,6 +17,6 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
     ChatDialogComponent
   ],
   exports: [ ChatDialogComponent ],
-  providers: [ChatService]
+  providers: [ChatService,SpeechService]
 })
 export class ChatModule { }

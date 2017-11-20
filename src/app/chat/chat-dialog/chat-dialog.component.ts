@@ -1,16 +1,24 @@
-import { Component, OnInit, AfterViewChecked, ElementRef, ViewChild, Output, EventEmitter  } from '@angular/core';
+import { Component, OnInit,OnDestroy, AfterViewChecked, ElementRef, ViewChild, Output, EventEmitter  } from '@angular/core';
 import { FormControl , FormGroup} from '@angular/forms';
 import { ChatService, Message } from '../chat.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/scan';
+import { SpeechService } from '../../speech.service';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
+export interface IWindow extends Window {
+  webkitSpeechRecognition: any;
+}
+
+const { webkitSpeechRecognition }: IWindow = <IWindow>window;
+const recognition = webkitSpeechRecognition;
 
 @Component({
   selector: 'chat-dialog',
   templateUrl: './chat-dialog.component.html',
   styleUrls: ['./chat-dialog.component.css']
 })
-export class ChatDialogComponent implements OnInit {
+export class ChatDialogComponent implements OnInit,OnDestroy {
   @Output() seeHaro  = new EventEmitter();
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
   messages: Observable<Message[]>;
@@ -23,7 +31,7 @@ export class ChatDialogComponent implements OnInit {
   userTextAvailability = false;
   volSupport = true;
   speechRecog = true
-  constructor(public chat: ChatService) { }
+  constructor(public chat: ChatService, public speech:SpeechService) { }
 
   ngOnInit() {
     // appends to array after each new message is added to feedSource
@@ -43,6 +51,7 @@ export class ChatDialogComponent implements OnInit {
       }
     })
 
+ 
     // this.messages.subscribe(msg => {
     //   //msg[msg.length].content == 'want to see you'
     //   if(msg.length > 0){
@@ -68,8 +77,10 @@ export class ChatDialogComponent implements OnInit {
   ngAfterViewChecked() {
     this.scrollToBottom();
 }
-
-private onScroll() {
+ngOnDestroy() {
+  this.speech.DestroySpeechObject();
+}
+ onScroll() {
   let element = this.myScrollContainer.nativeElement
   let atBottom = element.scrollHeight - element.scrollTop === element.clientHeight
   if (this.disableScrollDown && atBottom) {
@@ -99,12 +110,124 @@ private scrollToBottom(): void {
   muted(){
     this.mute = !this.mute;
   }
-
+  speechData:any
   talk(){
     this.talking = !this.talking;
     if(this.talking){
-      this.chat.speechToTextStart()
+     this.speechToTextStart(this.chat)
     }
+  }
+
+
+  
+  speechToTextStart(chat) {
+
+   let speechValue = new BehaviorSubject("");
+
+   speechValue.subscribe((val) => {
+     console.log("val",val);
+     if(val)
+     this.chat.converse(val,this.mute)
+   })
+
+    var final_transcript = '';
+    var recognizing = false;
+    var ignore_onend;
+    var start_timestamp;
+
+    var recognition = new webkitSpeechRecognition();
+    recognition.showInfo = function (s) {
+      // this.update(new Message(s, 'user'));
+     //this.chat.converse(s,this.mute)
+    speechValue.next(s);
+    }
+   
+     recognition.upgrade = function() {
+      recognition.showInfo('info_upgrade');
+     }
+   
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    final_transcript = '';
+    recognition.lang = 'en-US';
+
+    recognition.onstart = function () {
+      recognizing = true;
+      recognition.showInfo('info_speak_now');
+    };
+
+    recognition.onresult = function (event) {
+      console.log("speech event", event);
+      var interim_transcript:any = '';
+      if (typeof (event.results) == 'undefined') {
+        recognition.onend = null;
+        recognition.stop();
+        recognition.upgrade();
+        return;
+      }
+      for (var i = event.resultIndex; i < event.results.length; ++i) {
+        if (event.results[i].isFinal) {
+           final_transcript  +=   event.results[i][0].transcript;
+        } else {
+           interim_transcript +=   event.results[i][0].transcript;
+        }
+        console.log("re",event.results[i][0].transcript)
+      }
+      //  final_transcript = recognition.capitalize(final_transcript);
+      //  interim_transcript =  event.results[i][0].transcript;
+      if (final_transcript || interim_transcript) {
+        recognition.showInfo(final_transcript || interim_transcript);
+      }
+
+    };
+
+    recognition.start();
+
+    recognition.onend = function () {
+      console.log("speech end", event);
+      this.talking = false
+      recognizing = false;
+      if (ignore_onend) {
+        return;
+      }
+
+      if (!final_transcript) {
+        recognition.showInfo('info_start');
+        return;
+      }
+      recognition.showInfo('');
+      if (window.getSelection) {
+        window.getSelection().removeAllRanges();
+        var range = document.createRange();
+        range.selectNode(document.getElementById('final_span'));
+        window.getSelection().addRange(range);
+      }
+    }
+    recognition.onerror = function (event) {
+      var start_timestamp;
+
+      console.log("speech error", event);
+      if (event.error == 'no-speech') {
+
+        recognition.showInfo('info_no_speech');
+        ignore_onend = true;
+      }
+      if (event.error == 'audio-capture') {
+
+        recognition.showInfo('info_no_microphone');
+        ignore_onend = true;
+      }
+      if (event.error == 'not-allowed') {
+        if (event.timeStamp - start_timestamp < 100) {
+          recognition.showInfo('info_blocked');
+        } else {
+          recognition.showInfo('info_denied');
+        }
+        ignore_onend = true;
+      }
+    }
+
+
   }
 
 }
