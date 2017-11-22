@@ -5,8 +5,8 @@
       <img src="../../../assets/bot-icon.png" alt="avatar" />
       
       <div class="chat-about">
-        <div class="chat-with">TflyBot</div>
-        <div class="chat-num-messages">Helping Flight Onboards.</div>
+        <div class="chat-with">Yogi</div>
+        <div class="chat-num-messages">Helping You being fit.</div>
       </div>
       <i class="fa" (click)="muted()" [ngClass]="{ 'fa-volume-up': !mute,
       'fa-volume-off':  mute }" *ngIf="volSupport"></i>
@@ -18,7 +18,7 @@
           <div class="message-data"  [ngClass]="{ 'align-right': message.sentBy === 'bot'}">
             <span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;
             <span class="message-data-name" *ngIf="message.sentBy === 'user'"><i class="fa fa-circle me"></i>You</span> 
-            <span class="message-data-name" *ngIf="message.sentBy === 'bot'"><i class="fa fa-circle online"></i> TFlyBot</span>
+            <span class="message-data-name" *ngIf="message.sentBy === 'bot'"><i class="fa fa-circle online"></i> Yogi</span>
           </div>
           <div class="message" [ngClass]="{ 'other-message': message.sentBy === 'bot',
           'my-message':   message.sentBy === 'user' }">

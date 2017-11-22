@@ -20,7 +20,7 @@ const recognition = webkitSpeechRecognition;
 @Injectable()
 export class ChatService {
 
-  readonly token = environment.dialogflow.tflybot;
+  readonly token = environment.dialogflow.yogi;
   readonly client = new ApiAiClient({ accessToken: this.token });
 
   conversation = new BehaviorSubject<Message[]>([]);
