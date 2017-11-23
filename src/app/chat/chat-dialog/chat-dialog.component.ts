@@ -99,13 +99,6 @@ export class ChatDialogComponent implements OnInit, OnDestroy {
     speechValue.subscribe((val) => {
       console.log("val", val);
 
-<<<<<<< HEAD
-   speechValue.subscribe((val) => {
-     console.log("val",val);
-    // if(val)
-     //this.chat.converse(val,this.mute)
-   })
-=======
     if(val != ('info_blocked' || 'info_speak_now')){
       this.chatForm.get('userMsg').setValue(val);
       setTimeout(() => {
@@ -117,7 +110,6 @@ export class ChatDialogComponent implements OnInit, OnDestroy {
     this.chat.converse(val,this.mute,true)
       
     })
->>>>>>> ffbc5fd7dfda1674785016887ebe3efaaaeb3736
 
     var final_transcript = '';
     var recognizing = false;
