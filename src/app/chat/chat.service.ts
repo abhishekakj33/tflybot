@@ -20,7 +20,7 @@ const recognition = webkitSpeechRecognition;
 @Injectable()
 export class ChatService {
 
-  readonly token = environment.dialogflow.tflybot;
+  readonly token = environment.dialogflow.yogi;
   readonly client = new ApiAiClient({ accessToken: this.token });
 
   conversation = new BehaviorSubject<Message[]>([]);
@@ -28,24 +28,45 @@ export class ChatService {
   constructor() { }
 
   // Sends and receives messages via DialogFlow
-  converse(msg: string, mute: boolean) {
+  converse(msg: string, mute: boolean, audio:boolean) {
     const userMessage = new Message(msg, 'user');
-    this.update(userMessage);
-
-    return this.client.textRequest(msg)
+    if(msg == 'info_blocked'){
+      const botMessage = new Message('Microphone has been blocked.', 'bot');
+      this.update(botMessage,false,audio);
+    }else if(msg == 'info_speak_now'){
+      const botMessage = new Message('You can Speak with me now.', 'bot');
+      this.update(botMessage,false,audio);
+    }
+    else{
+      this.update(userMessage,false,audio);
+    }
+    
+    
+    if(msg != 'info_blocked'){
+      return this.client.textRequest(msg)
       .then(res => {
         const speech = res.result.fulfillment.speech;
         const botMessage = new Message(speech, 'bot');
-        this.update(botMessage, mute);
+      if(audio){
+      
+          this.update(botMessage, mute,audio);
+       
+      }else{
+        this.update(botMessage, mute,audio);
+      }
+        
+       
       }, (error) => {
         new Message('Not able to connect to server', 'bot');
       });
+    }
+    
   }
 
 
 
   // Adds message to source
-  update(msg: Message, mute?: boolean) {
+  update(msg: Message, mute: boolean, audio:boolean) {
 
     if (msg.sentBy == 'bot' && !mute) {
       let utterance = new SpeechSynthesisUtterance(msg.content);
@@ -57,8 +78,14 @@ export class ChatService {
 
       window.speechSynthesis.speak(utterance);
     }
-
+  if(audio){
+   
+      this.conversation.next([msg]);
+  
+  }else{
     this.conversation.next([msg]);
+  }
+    
   }
 
   
