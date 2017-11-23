@@ -126,8 +126,8 @@ private scrollToBottom(): void {
 
    speechValue.subscribe((val) => {
      console.log("val",val);
-     if(val)
-     this.chat.converse(val,this.mute)
+    // if(val)
+     //this.chat.converse(val,this.mute)
    })
 
     var final_transcript = '';

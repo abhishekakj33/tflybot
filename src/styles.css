@@ -78,7 +78,7 @@ body {
 }
 .chat .chat-history {
   padding: 0px 0px;
-  height: 86vh;
+  height: 84vh;
   overflow-y: auto;
   scroll-behavior: smooth;
 }
