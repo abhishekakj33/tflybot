@@ -1,23 +1,6 @@
 
 
 <form [formGroup]="chatForm" novalidate>
-<<<<<<< HEAD
-
-=======
-<div class="container clearfix" id="container"> 
-  <div class="chat">
-    <div class="chat-header clearfix">
-      <img src="../../../assets/bot-icon.png" alt="avatar" />
-      
-      <div class="chat-about">
-        <div class="chat-with">Yogi</div>
-        <div class="chat-num-messages">Helping You be fit.</div>
-      </div>
-      <i class="fa" (click)="muted()" [ngClass]="{ 'fa-volume-up': !mute,
-      'fa-volume-off':  mute }" *ngIf="volSupport"></i>
-    </div> <!-- end chat-header -->
-    
->>>>>>> 9856a64e9d34213fe259bb1a331a8151d0eab749
     <div class="chat-history content" #scrollMe (scroll)="onScroll()">
       <ul>
         <li class="clearfix" *ngFor="let message of messages | async">
