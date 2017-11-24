@@ -28,45 +28,38 @@ export class ChatService {
   constructor() { }
 
   // Sends and receives messages via DialogFlow
-  converse(msg: string, mute: boolean, audio:boolean) {
+  converse(msg: string, mute: boolean, audio: boolean) {
     const userMessage = new Message(msg, 'user');
-    if(msg == 'info_blocked'){
+    if (msg == 'info_blocked') {
       const botMessage = new Message('Microphone has been blocked.', 'bot');
-      this.update(botMessage,false,audio);
-    }else if(msg == 'info_speak_now'){
+      this.update(botMessage, false, audio);
+    } else if (msg == 'info_speak_now') {
       const botMessage = new Message('You can Speak with me now.', 'bot');
-      this.update(botMessage,false,audio);
+      this.update(botMessage, false, audio);
     }
-    else{
-      this.update(userMessage,false,audio);
+    else {
+      this.update(userMessage, false, audio);
     }
-    
-    
-    if(msg != 'info_blocked'){
+
+    if (msg != 'info_blocked') {
       return this.client.textRequest(msg)
-      .then(res => {
-        const speech = res.result.fulfillment.speech;
-        const botMessage = new Message(speech, 'bot');
-      if(audio){
-      
-          this.update(botMessage, mute,audio);
-       
-      }else{
-        this.update(botMessage, mute,audio);
-      }
-        
-       
-      }, (error) => {
-        new Message('Not able to connect to server', 'bot');
-      });
+        .then(res => {
+          console.log("res dialogflow",res)
+          const speech = res.result.fulfillment.speech;
+          const botMessage = new Message(speech, 'bot');
+          if (audio) {
+            this.update(botMessage, mute, audio);
+          } else {
+            this.update(botMessage, mute, audio);
+          }
+        }, (error) => {
+          new Message('Not able to connect to server', 'bot');
+        });
     }
-    
   }
 
-
-
   // Adds message to source
-  update(msg: Message, mute: boolean, audio:boolean) {
+  update(msg: Message, mute: boolean, audio: boolean) {
 
     if (msg.sentBy == 'bot' && !mute) {
       let utterance = new SpeechSynthesisUtterance(msg.content);
@@ -78,17 +71,17 @@ export class ChatService {
 
       window.speechSynthesis.speak(utterance);
     }
-  if(audio){
-   
+    if (audio) {
+
       this.conversation.next([msg]);
-  
-  }else{
-    this.conversation.next([msg]);
-  }
-    
+
+    } else {
+      this.conversation.next([msg]);
+    }
+
   }
 
-  
+
 
 }
 

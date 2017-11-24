@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "yogi"
+    "Yogi": "newagent-39dcc",
+    "default": "newagent-39dcc"
   }
 }
