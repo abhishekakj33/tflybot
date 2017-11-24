@@ -2,19 +2,25 @@
   <div class="for-flex-wrapper a-container site-content">
     <mat-card class="a-card">
       <mat-card-content>
-        <div formArrayName="questions">
-          <mat-card class="a-card a-margin-bottom" *ngFor="let question of questions.controls; let i=index" [formGroupName]="i">
-            <mat-card-content>
+          <mat-form-field class="a-full-width">
+              <input matInput type="text" placeholder="Sanskrit Name" formControlName="sanskritName">
+            </mat-form-field> 
+            <mat-form-field class="a-full-width">
+                <input matInput type="text" placeholder="English Name" formControlName="englishName">
+              </mat-form-field> 
               <mat-form-field class="a-full-width">
-                <input matInput type="text" placeholder="Question" formControlName="question">
-              </mat-form-field>
+                  <input matInput type="text" placeholder="About" formControlName="about">
+                </mat-form-field> 
+        <div formArrayName="steps">
+          <mat-card class="a-card a-margin-bottom" *ngFor="let step of steps.controls; let i=index" [formGroupName]="i">
+            <mat-card-content>
               <div class="" formArrayName="options">
                 <mat-list>
-                  <mat-list-item *ngFor="let option of question.controls['options'].controls; let j=index" [formGroupName]="j">
+                  <mat-list-item *ngFor="let option of step.controls['options'].controls; let j=index" [formGroupName]="j">
                     <mat-form-field class="full-width">
-                      <input matInput type="text" placeholder="Option {{j+1}}" formControlName="option" (focus)="optionFocussed(i,j,question.controls['options'].controls.length)">
+                      <input matInput type="text" placeholder="Step {{j+1}}" formControlName="option" (focus)="optionFocussed(i,j,step.controls['options'].controls.length)">
                       <button matSuffix type="button" mat-icon-button (click)="removeOption(i,j)" matTooltip="Remove  Option">
-                        <mat-icon svgIcon="remove"></mat-icon>
+                        <mat-icon >remove</mat-icon>
                       </button>
                     </mat-form-field>
                   </mat-list-item>
@@ -23,6 +29,30 @@
             </mat-card-content>
           </mat-card>
         </div>
+        <div formArrayName="anatomies">
+            <mat-card class="a-card a-margin-bottom" >
+                <mat-card-content>
+                  
+                    <mat-list>
+                        <mat-list-item *ngFor="let anatomy of anatomies.controls; let i=index" [formGroupName]="i">
+                          <mat-form-field class="full-width">
+                            <input matInput type="text" placeholder="Anatomy {{i+1}}" formControlName="anatomy" (focus)="anatomyFocussed(i,anatomies.controls.length)">
+                            <button matSuffix type="button" mat-icon-button (click)="removeAnatomy(i)" matTooltip="Remove  Anatomy">
+                              <mat-icon >remove</mat-icon>
+                            </button>
+                          </mat-form-field>
+                        </mat-list-item>
+                      </mat-list>
+                </mat-card-content>
+            </mat-card>
+            
+        </div>
+        <!-- <div formArrayName="ailments">
+            
+        </div>
+        <div formArrayName="cautions">
+            
+        </div> -->
       </mat-card-content>
       <mat-toolbar color="">
         <button type="button" (click)="deletePoll(pollForm.value)" mat-raised-button mat-mini-fab><mat-icon svgIcon="delete"></mat-icon></button>
@@ -33,11 +63,11 @@
   </div>
 
 
-  <!-- <div class="margin-20">
+  <div class="margin-20">
     <div>myForm details:-</div>
-    <pre>Is myForm valid?: <br>{{pollForm.valid | json}}</pre>
+    <pre>Is myForm valid?: <br>{{asanaForm.valid | json}}</pre>
     <pre>Is myForm submitted?: <br>{{submitted | json}}</pre>
-    <pre>myForm value: <br>{{pollForm.value | json}}</pre>
-  </div> -->
+    <pre>myForm value: <br>{{asanaForm.value | json}}</pre>
+  </div>
 
 </form>

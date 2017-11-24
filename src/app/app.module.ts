@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import { NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';

@@ -1,19 +1,21 @@
 
 export class Asana {
     id?: any;
-    days?: string
+    sanskritName?: string;
+    about:string;
     author: string
     authorUID: any
     authorImageUrl:any
-    city: object
+    englishName: string
     date: Date
-    question: AsanaSteps
-    questions: AsanaSteps[]
+    step: AsanaSteps
+    steps: AsanaSteps[];
+    anatomies:any;
     totalVotesCount?: number = 0;
 }
 
 export class AsanaSteps {
-    question: string
+    step: string
     options: AsanaOption[];
 }
 

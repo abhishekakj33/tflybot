@@ -40,83 +40,104 @@ export class AsanasComponent implements OnInit {
 
   createAsanaForm(asana?: Asana): void {
 
-    let days = asana ? asana.days : 'five'
+    let sanskritName = asana ? asana.sanskritName : '',
+    englishName = asana ? asana.englishName : '',
+    about = asana ? asana.about : ''
 
-    let questions: FormArray = this.fb.array([]);
+
+    let anatomies: FormArray = this.fb.array([]);
+    let steps: FormArray = this.fb.array([]);
 
     let options: FormArray = this.fb.array([]);
 
     this.asanaForm = this.fb.group({
-      days: days,
-      questions: questions,
+      sanskritName: sanskritName,
+      englishName:englishName,
+      about:about,
+      steps: steps,
+      anatomies:anatomies
     });
 
     if (!asana) {
-      this.addQuestion();
+      this.addStep();
+      this.addAnatomy();
       this.addOption(0)
     } else {
-      //console.log("in else",poll);
-      // poll.questions.forEach((question, qindex) => {
-      //   this.addQuestion(question);
-      //   question.options.forEach((option, optindex) => {
-      //     this.addOption(qindex, option)
-      //   })
-      // })
+      
     }
 
   }
 
-  initQuestion(question) {
+  initStep(step) {
     let options: FormArray = this.fb.array([]);
     return this.fb.group({
-      question: [question],
+      step: [step],
       options: options
     });
   }
 
-  get questions(): FormArray {
-    return this.asanaForm.get('questions') as FormArray;
+  get steps(): FormArray {
+    return this.asanaForm.get('steps') as FormArray;
   };
 
 
-  addQuestion(questions?: AsanaSteps) {
-    let question = questions ? questions.question : ''
-    this.questions.push(this.initQuestion(question));
-    this.addOption(this.questions.length - 1);
+  addStep(steps?: AsanaSteps) {
+    let step = steps ? steps.step : ''
+    this.steps.push(this.initStep(step));
+    this.addOption(this.steps.length - 1);
   }
-  /**
-   * Adds a option FormGroup to the question <FormArray>FormControl
-   * @method addOption
-   * @param {questionIndex} index of the question to which option is to be added
-   * @return {void}
-   */
+
   initOption(option) {
     return this.fb.group({
       option: [option]
     });
   }
 
-  addOption(questionIndex?: number, asanaOpt?: AsanaOption) {
+  addOption(stepIndex?: number, asanaOpt?: AsanaOption) {
     //console.log("questionIndex", questionIndex)
     let option = asanaOpt ? asanaOpt.option : '';
-    let options = this.questions.controls[questionIndex].get('options') as FormArray
+    let options = this.steps.controls[stepIndex].get('options') as FormArray
     options.push(this.initOption(option))
   }
 
-  removeQuestion(questionIndex: number) {
+  removeStep(stepIndex: number) {
     //console.log("this.questions", this.questions, "this.poll", this.poll);
-    this.questions.removeAt(questionIndex);
+    this.steps.removeAt(stepIndex);
   }
 
-  removeOption(questionIndex: number, optionIndex: number) {
-    let options = this.questions.controls[questionIndex].get('options') as FormArray
+  removeOption(stepIndex: number, optionIndex: number) {
+    let options = this.steps.controls[stepIndex].get('options') as FormArray
     options.removeAt(optionIndex);
   }
-  optionFocussed(questionIndex, optionIndex, noOfOptions) {
+  optionFocussed(stepIndex, optionIndex, noOfOptions) {
     if (optionIndex == (noOfOptions - 1)) {
-      this.addOption(questionIndex)
+      this.addOption(stepIndex)
     }
 
+  }
+
+  get anatomies(): FormArray {
+    return this.asanaForm.get('anatomies') as FormArray;
+  };
+
+  initAnatomy(anatomy) {
+    return this.fb.group({
+      anatomy: [anatomy]
+    });
+  }
+
+
+  addAnatomy(anatomies?: any) {
+    let anatomy = anatomies ? anatomies.anatomy : ''
+    this.anatomies.push(this.initAnatomy(anatomy));
+  }
+  anatomyFocussed(anatomyIndex,noOfOptions){
+    if (anatomyIndex == (noOfOptions - 1)) {
+    this.addAnatomy(anatomyIndex)
+    }
+  }
+  removeAnatomy(i){
+    this.anatomies.removeAt(i);
   }
 
 
