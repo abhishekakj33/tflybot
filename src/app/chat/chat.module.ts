@@ -6,12 +6,14 @@ import { ChatService } from './chat.service';
 import { SpeechService } from '../speech.service';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 
+import { ChatRoutingModule } from './chat.routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ChatRoutingModule
   ],
   declarations: [
     ChatDialogComponent

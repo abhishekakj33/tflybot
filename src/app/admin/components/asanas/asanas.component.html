@@ -1,0 +1,43 @@
+<form [formGroup]="asanaForm" novalidate class="form">
+  <div class="for-flex-wrapper a-container site-content">
+    <mat-card class="a-card">
+      <mat-card-content>
+        <div formArrayName="questions">
+          <mat-card class="a-card a-margin-bottom" *ngFor="let question of questions.controls; let i=index" [formGroupName]="i">
+            <mat-card-content>
+              <mat-form-field class="a-full-width">
+                <input matInput type="text" placeholder="Question" formControlName="question">
+              </mat-form-field>
+              <div class="" formArrayName="options">
+                <mat-list>
+                  <mat-list-item *ngFor="let option of question.controls['options'].controls; let j=index" [formGroupName]="j">
+                    <mat-form-field class="full-width">
+                      <input matInput type="text" placeholder="Option {{j+1}}" formControlName="option" (focus)="optionFocussed(i,j,question.controls['options'].controls.length)">
+                      <button matSuffix type="button" mat-icon-button (click)="removeOption(i,j)" matTooltip="Remove  Option">
+                        <mat-icon svgIcon="remove"></mat-icon>
+                      </button>
+                    </mat-form-field>
+                  </mat-list-item>
+                </mat-list>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-card-content>
+      <mat-toolbar color="">
+        <button type="button" (click)="deletePoll(pollForm.value)" mat-raised-button mat-mini-fab><mat-icon svgIcon="delete"></mat-icon></button>
+        <span class="a-fill-remaining-space"></span>
+        <button type="button" (click)="savePollEvent(pollForm.value, pollForm.valid, 'published')" mat-raised-button>Publish</button>
+      </mat-toolbar>
+    </mat-card>
+  </div>
+
+
+  <!-- <div class="margin-20">
+    <div>myForm details:-</div>
+    <pre>Is myForm valid?: <br>{{pollForm.valid | json}}</pre>
+    <pre>Is myForm submitted?: <br>{{submitted | json}}</pre>
+    <pre>myForm value: <br>{{pollForm.value | json}}</pre>
+  </div> -->
+
+</form>

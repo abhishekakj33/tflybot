@@ -1,17 +1,7 @@
+
+
 <form [formGroup]="chatForm" novalidate>
-<div class="container clearfix" id="container"> 
-  <div class="chat">
-    <div class="chat-header clearfix">
-      <img src="../../../assets/bot-icon.png" alt="avatar" />
-      
-      <div class="chat-about">
-        <div class="chat-with">Yogi</div>
-        <div class="chat-num-messages">Helping You being fit.</div>
-      </div>
-      <i class="fa" (click)="muted()" [ngClass]="{ 'fa-volume-up': !mute,
-      'fa-volume-off':  mute }" *ngIf="volSupport"></i>
-    </div> <!-- end chat-header -->
-    
+
     <div class="chat-history content" #scrollMe (scroll)="onScroll()">
       <ul>
         <li class="clearfix" *ngFor="let message of messages | async">
@@ -32,9 +22,6 @@
     
     <div class="chat-message clearfix chat-footer" >
       <input  formControlName="userMsg" (keyup.enter)="sendMessage()" type="text" name="message-to-send"  id="message-to-send" placeholder ="Flight onboarding queries." >
-        
-     
-      
       <button type="button" (click)="talk()"  class="microphone" *ngIf="speechRecog">
             <i  class="fa" aria-hidden="true" [ngClass]="{ 'fa-microphone-slash': !talking,
             'fa-microphone':  talking }" *ngIf="!userTextAvailability"></i>
@@ -43,9 +30,6 @@
       <button type="button" (click)="sendMessage()"><i class="fa fa-paper-plane" aria-hidden="true" *ngIf="userTextAvailability"></i></button>
 
     </div> <!-- end chat-message -->
-    
-  </div> <!-- end chat -->
-  
-</div> <!-- end container -->
+
 </form>
 

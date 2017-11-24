@@ -1,7 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
@@ -17,19 +16,15 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatListModule} from '@angular/material/list';
 
-import { AppComponent } from './app.component';
 
-import { ChatModule } from './chat/chat.module';
-import { AdminModule } from './admin/admin.module';
-import { AppRoutingModule } from './app.routing.module';
+import { AsanasComponent } from './components/asanas/asanas.component';
+
+import { AdminRoutingModule } from './admin.routing.module';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
   imports: [
-    BrowserModule,
-    NoopAnimationsModule,
+    CommonModule,
+    FormsModule,ReactiveFormsModule,
     MatInputModule,
     MatButtonModule,
     MatButtonToggleModule,
@@ -43,11 +38,8 @@ import { AppRoutingModule } from './app.routing.module';
     MatMenuModule,
     MatDialogModule,
     MatListModule,
-    AppRoutingModule,
-    ChatModule,
-    AdminModule
+    AdminRoutingModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  declarations: [AsanasComponent]
 })
-export class AppModule { }
+export class AdminModule { }
