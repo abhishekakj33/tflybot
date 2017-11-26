@@ -1,66 +1,58 @@
 <form [formGroup]="asanaForm" novalidate class="form">
-  <div class="for-flex-wrapper a-container site-content">
-    <mat-card class="a-card">
-      <mat-card-content>
-          <mat-form-field class="a-full-width">
-              <input matInput type="text" placeholder="Sanskrit Name" formControlName="sanskritName">
-            </mat-form-field> 
-            <mat-form-field class="a-full-width">
-                <input matInput type="text" placeholder="English Name" formControlName="englishName">
-              </mat-form-field> 
-              <mat-form-field class="a-full-width">
-                  <input matInput type="text" placeholder="About" formControlName="about">
-                </mat-form-field> 
-        <div formArrayName="steps">
-          <mat-card class="a-card a-margin-bottom" *ngFor="let step of steps.controls; let i=index" [formGroupName]="i">
-            <mat-card-content>
-              <div class="" formArrayName="options">
-                <mat-list>
-                  <mat-list-item *ngFor="let option of step.controls['options'].controls; let j=index" [formGroupName]="j">
-                    <mat-form-field class="full-width">
-                      <input matInput type="text" placeholder="Step {{j+1}}" formControlName="option" (focus)="optionFocussed(i,j,step.controls['options'].controls.length)">
-                      <button matSuffix type="button" mat-icon-button (click)="removeOption(i,j)" matTooltip="Remove  Option">
-                        <mat-icon >remove</mat-icon>
-                      </button>
-                    </mat-form-field>
-                  </mat-list-item>
-                </mat-list>
-              </div>
-            </mat-card-content>
-          </mat-card>
+
+  <div class="for-flex-wrapper container site-content">
+    <i class="fa fa-arrow-circle-left" aria-hidden="true"  [routerLink]="['../chat']" ></i>
+    <div class="a-button-group">
+    <a class="button"  [routerLink]="['../asanas']"  >List
+    </a>
+    <a class="button"  [routerLink]="['../admin']" > Create
+    </a>
+    </div>
+    <div class="a-card">
+      <label for="nameField">Sanskrit Name</label>
+      <input type="text" placeholder="Sanskrit Name" formControlName="sanskritName">
+      <label for="nameField">English Name</label>
+      <input type="text" placeholder="English Name" formControlName="englishName">
+      <label for="nameField">About</label>
+      <textarea placeholder="Discription of asana" formControlName="about"></textarea>
+      <!-- <div formArrayName="steps">
+        <div class="a-card a-margin-bottom" *ngFor="let step of steps.controls; let i=index" [formGroupName]="i">
+          <div class="" formArrayName="options">
+            <div *ngFor="let option of step.controls['options'].controls; let j=index" [formGroupName]="j">
+              <input type="text" placeholder="Step {{j+1}}" formControlName="option" (focus)="optionFocussed(i,j,step.controls['options'].controls.length)">
+              <button type="button" (click)="removeOption(i,j)">
+                <i>remove</i>
+              </button>
+            </div>
+          </div> -->
+      <div formArrayName="anatomies">
+          <label for="nameField">Anatomy List</label>
+        <div class="a-input-list" *ngFor="let anatomy of anatomies.controls; let i=index" [formGroupName]="i">
+
+          <input type="text" placeholder="Anatomy {{i+1}}" formControlName="anatomy" (focus)="anatomyFocussed(i,anatomies.controls.length)">
+          <span (click)="removeAnatomy(i)" class="a-cross">
+              <i class="fa fa-times" aria-hidden="true"></i>
+          </span>
         </div>
-        <div formArrayName="anatomies">
-            <mat-card class="a-card a-margin-bottom" >
-                <mat-card-content>
-                  
-                    <mat-list>
-                        <mat-list-item *ngFor="let anatomy of anatomies.controls; let i=index" [formGroupName]="i">
-                          <mat-form-field class="full-width">
-                            <input matInput type="text" placeholder="Anatomy {{i+1}}" formControlName="anatomy" (focus)="anatomyFocussed(i,anatomies.controls.length)">
-                            <button matSuffix type="button" mat-icon-button (click)="removeAnatomy(i)" matTooltip="Remove  Anatomy">
-                              <mat-icon >remove</mat-icon>
-                            </button>
-                          </mat-form-field>
-                        </mat-list-item>
-                      </mat-list>
-                </mat-card-content>
-            </mat-card>
-            
-        </div>
-        <!-- <div formArrayName="ailments">
+
+      </div>
+      <!-- <div formArrayName="ailments">
             
         </div>
         <div formArrayName="cautions">
             
         </div> -->
-      </mat-card-content>
-      <mat-toolbar color="">
+
+      <!-- <mat-toolbar color="">
         <button type="button" (click)="deletePoll(pollForm.value)" mat-raised-button mat-mini-fab><mat-icon svgIcon="delete"></mat-icon></button>
         <span class="a-fill-remaining-space"></span>
         <button type="button" (click)="savePollEvent(pollForm.value, pollForm.valid, 'published')" mat-raised-button>Publish</button>
-      </mat-toolbar>
-    </mat-card>
+      </mat-toolbar> -->
+
+    </div>
   </div>
+
+
 
 
   <div class="margin-20">

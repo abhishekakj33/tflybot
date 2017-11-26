@@ -1,10 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 @import url(https://fonts.googleapis.com/css?family=Roboto);
 @import url(https://cdnjs.com/libraries/normalize);
-@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
+@import url(https://cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css);
 
 html, body {
   
@@ -18,7 +17,7 @@ body {
 }
 
 ul,li{
-    list-style: none
+    xlist-style: none
 }
 
 *, *:before, *:after {
@@ -39,7 +38,7 @@ body {
   padding: 20px;
 }
 
-.container {
+.a-container {
  
 
   
@@ -143,6 +142,15 @@ body {
 }
 .chat .chat-message .microphone{
   right: 15px;
+  position: absolute;
+  bottom: 10px;
+  font-size: 18px;
+}
+.send-message{
+  right: 15px;
+  position: absolute;
+  bottom: 10px;
+  font-size: 18px;
 }
 .chat .chat-message input[type="text"] {
   width: 100%;
@@ -152,6 +160,7 @@ body {
   border: 1px solid #e0e0e0;
   resize: none;
   border-radius: 20%;
+  background: #fff;
 }
 .chat .chat-message .fa-file-o, .chat .chat-message .fa-file-image-o {
   font-size: 16px;
@@ -210,18 +219,115 @@ body {
   clear: both;
   height: 0;
 }
-.fa-volume-up,.fa-volume-off{
+.fa-volume-up,.fa-volume-off,.fa-cog,.fa-arrow-circle-left{
   float: right;
   margin: 11px 10px;
   color: #0084ff;
   font-size: 22px;
 }
 
+
 span.message-data-name {
   font-size: 12px;
   color:#212121;
 }
 .fa {
- 
+ cursor: pointer;
   color: #0084ff;
 }
+.fa-arrow-circle-left{
+  color: #9b4dca;
+  float: left;
+  margin: 10px;
+  font-size: 33px;
+}
+.a-input-list{
+  position: relative;
+}
+.a-cross{
+  position: absolute;
+  right: 5px;
+  top: 0px;
+  font-size: 24px;
+ 
+
+}
+.a-cross .fa{
+  color: #9b4dca
+}
+.a-button-group{
+  padding: 10px 0px 10px 0px;
+  float: left;
+}
+
+.card {
+  display: inline-block;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,.15);
+  margin: 20px;
+  position: relative;
+  margin-bottom: 50px;
+  transition: all .2s ease-in-out;
+}
+
+.card:hover {
+  /*box-shadow: 0 5px 22px 0 rgba(0,0,0,.25);*/
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  margin-bottom: 54px;
+}
+
+.image {
+  height: 200px;
+  opacity: .7;
+  overflow: hidden;
+  transition: all .2s ease-in-out;
+}
+
+.image:hover,
+.card:hover .image {
+  height: 200px;
+  opacity: 1;
+}
+
+.text {
+  background: #FFF;
+  padding: 20px;
+  min-height: 200px;
+}
+
+.text p {
+  margin-bottom: 0px;
+}
+
+.fab {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  position: absolute;
+  margin-top: -50px;
+  right: 20px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, .3);
+  color: #fff;
+  font-size: 48px;
+  line-height: 48px;
+  text-align: center;
+  background: #0066A2;
+  -webkit-transition: -webkit-transform .2s ease-in-out;
+  transition: transform .2s ease-in-out;
+}
+
+.fab:hover {
+  background: #549D3C;
+  cursor: pointer;
+  -ms-transform: rotate(90deg);
+	-webkit-transform: rotate(90deg);
+	transform: rotate(90deg);
+}
+
+/* Larger than mobile screen */
+@media (min-width: 40.0rem) {  }
+
+/* Larger than tablet screen */
+@media (min-width: 80.0rem) { }
+
+/* Larger than desktop screen */
+@media (min-width: 120.0rem) { }

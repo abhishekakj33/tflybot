@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import {MatIconRegistry} from '@angular/material/icon';
-import {DomSanitizer} from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 //import { AuthService } from '../../../core/services/auth/auth.service';
 //import { PollService } from '../../../core/services/poll/poll.service';
 import { Asana , AsanaSteps, AsanaOption} from '../../../core/models/asana.model';
@@ -15,20 +14,18 @@ import { Asana , AsanaSteps, AsanaOption} from '../../../core/models/asana.model
   styleUrls: ['./asanas.component.css']
 })
 export class AsanasComponent implements OnInit {
-
-  constructor(private fb: FormBuilder,private router: Router, private route: ActivatedRoute) {
-  }
-
- 
-   //redirectToEdit: Subscription;
+  private asanasCollection: AngularFirestoreCollection<any>;
+  asanas: Observable<any[]>;
   user: any;
   public submitted: boolean; // keep track on whether form is submitted
    asana: Observable<any>;
-  // pollId: any;
    asanaForm: FormGroup;
-  // dynamicHeight = true;
-  // public formEvents: any[] = [];
+  
 
+  constructor(private afs: AngularFirestore,private fb: FormBuilder,private router: Router, private route: ActivatedRoute) {
+    this.asanasCollection = afs.collection<any>('items');
+    this.asanas = this.asanasCollection.valueChanges();
+  }
 
 
   ngOnInit() {
@@ -46,7 +43,7 @@ export class AsanasComponent implements OnInit {
 
 
     let anatomies: FormArray = this.fb.array([]);
-    let steps: FormArray = this.fb.array([]);
+    ////let steps: FormArray = this.fb.array([]);
 
     let options: FormArray = this.fb.array([]);
 
@@ -54,65 +51,14 @@ export class AsanasComponent implements OnInit {
       sanskritName: sanskritName,
       englishName:englishName,
       about:about,
-      steps: steps,
+    //  steps: steps,
       anatomies:anatomies
     });
 
-    if (!asana) {
-      this.addStep();
+     if (!asana) {
       this.addAnatomy();
-      this.addOption(0)
-    } else {
-      
-    }
-
-  }
-
-  initStep(step) {
-    let options: FormArray = this.fb.array([]);
-    return this.fb.group({
-      step: [step],
-      options: options
-    });
-  }
-
-  get steps(): FormArray {
-    return this.asanaForm.get('steps') as FormArray;
-  };
-
-
-  addStep(steps?: AsanaSteps) {
-    let step = steps ? steps.step : ''
-    this.steps.push(this.initStep(step));
-    this.addOption(this.steps.length - 1);
-  }
-
-  initOption(option) {
-    return this.fb.group({
-      option: [option]
-    });
-  }
-
-  addOption(stepIndex?: number, asanaOpt?: AsanaOption) {
-    //console.log("questionIndex", questionIndex)
-    let option = asanaOpt ? asanaOpt.option : '';
-    let options = this.steps.controls[stepIndex].get('options') as FormArray
-    options.push(this.initOption(option))
-  }
-
-  removeStep(stepIndex: number) {
-    //console.log("this.questions", this.questions, "this.poll", this.poll);
-    this.steps.removeAt(stepIndex);
-  }
-
-  removeOption(stepIndex: number, optionIndex: number) {
-    let options = this.steps.controls[stepIndex].get('options') as FormArray
-    options.removeAt(optionIndex);
-  }
-  optionFocussed(stepIndex, optionIndex, noOfOptions) {
-    if (optionIndex == (noOfOptions - 1)) {
-      this.addOption(stepIndex)
-    }
+     }
+    
 
   }
 
@@ -149,9 +95,8 @@ export class AsanasComponent implements OnInit {
     asana.author = this.user.displayName;
     asana.authorImageUrl = this.user.photoURL
 
-    //this.pollServ.savePoll(poll);
+    this.asanasCollection.add(asana);
 
-    //this.router.navigate(['../polls'])
   }
   deleteAsana(asana: Asana) {
    

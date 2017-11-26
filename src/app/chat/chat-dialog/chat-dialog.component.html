@@ -1,34 +1,57 @@
+<div class="a-container clearfix" id="container">
+  <div class="chat">
+    <div class="chat-header clearfix">
+      <img src="../../../assets/bot-icon.png" alt="avatar" />
 
+      <div class="chat-about">
+        <div class="chat-with">Yogi</div>
+        <div class="chat-num-messages">Helping You being fit.</div>
+      </div>
+      <i class="fa" (click)="muted()" [ngClass]="{ 'fa-volume-up': !mute,
+      'fa-volume-off':  mute }" *ngIf="volSupport"></i>
 
-<form [formGroup]="chatForm" novalidate>
-    <div class="chat-history content" #scrollMe (scroll)="onScroll()">
-      <ul>
-        <li class="clearfix" *ngFor="let message of messages | async">
-          <div class="message-data"  [ngClass]="{ 'align-right': message.sentBy === 'bot'}">
-            <span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;
-            <span class="message-data-name" *ngIf="message.sentBy === 'user'"><i class="fa fa-circle me"></i>You</span> 
-            <span class="message-data-name" *ngIf="message.sentBy === 'bot'"><i class="fa fa-circle online"></i> Yogi</span>
-          </div>
-          <div class="message" [ngClass]="{ 'other-message': message.sentBy === 'bot',
+      <i [routerLink]="['../admin']" class="fa fa-cog" aria-hidden="true"></i>
+
+    </div>
+    <form [formGroup]="chatForm" novalidate>
+      <div class="chat-history content" #scrollMe (scroll)="onScroll()">
+        <ul>
+          <li class="clearfix" *ngFor="let message of messages | async">
+            <div class="message-data" [ngClass]="{ 'align-right': message.sentBy === 'bot'}">
+              <span class="message-data-time">10:10 AM, Today</span> &nbsp; &nbsp;
+              <span class="message-data-name" *ngIf="message.sentBy === 'user'">
+                <i class="fa fa-circle me"></i>You</span>
+              <span class="message-data-name" *ngIf="message.sentBy === 'bot'">
+                <i class="fa fa-circle online"></i> Yogi</span>
+            </div>
+            <div class="message" [ngClass]="{ 'other-message': message.sentBy === 'bot',
           'my-message':   message.sentBy === 'user' }">
-            {{ message.content }}
-          </div>
-        </li>
-        
-      </ul>
-      
-    </div> <!-- end chat-history -->
-    
-    <div class="chat-message clearfix chat-footer" >
-      <input  formControlName="userMsg" (keyup.enter)="sendMessage()" type="text" name="message-to-send"  id="message-to-send" placeholder ="Flight onboarding queries." >
-      <button type="button" (click)="talk()"  class="microphone" *ngIf="speechRecog">
-            <i  class="fa" aria-hidden="true" [ngClass]="{ 'fa-microphone-slash': !talking,
+              {{ message.content }}
+            </div>
+          </li>
+
+        </ul>
+
+      </div>
+      <!-- end chat-history -->
+
+      <div class="chat-message clearfix chat-footer">
+        <input formControlName="userMsg" (keyup.enter)="sendMessage()" type="text" name="message-to-send" id="message-to-send" placeholder="Flight onboarding queries.">
+        <span  (click)="talk()" class="microphone" *ngIf="speechRecog">
+          <i class="fa" aria-hidden="true" [ngClass]="{ 'fa-microphone-slash': !talking,
             'fa-microphone':  talking }" *ngIf="!userTextAvailability"></i>
-            <!-- <i class="fa fa-microphone-slash" aria-hidden="true" *ngIf="!talking"></i> -->
-      </button>
-      <button type="button" (click)="sendMessage()"><i class="fa fa-paper-plane" aria-hidden="true" *ngIf="userTextAvailability"></i></button>
+        </span>
+        <span class="send-message" (click)="sendMessage()">
+          <i class="fa fa-paper-plane" aria-hidden="true" *ngIf="userTextAvailability"></i>
+        </span>
 
-    </div> <!-- end chat-message -->
+      </div>
+      <!-- end chat-message -->
 
-</form>
+    </form>
 
+  </div>
+  <!-- end chat -->
+
+</div>
+<!-- end container -->

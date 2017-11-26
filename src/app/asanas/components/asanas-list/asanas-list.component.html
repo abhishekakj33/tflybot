@@ -1,3 +1,30 @@
-<p>
-  asanas-list works!
-</p>
+<div class="for-flex-wrapper container site-content">
+  <i class="fa fa-arrow-circle-left" aria-hidden="true" [routerLink]="['../chat']"></i>
+  <div class="a-button-group">
+    <a class="button" [routerLink]="['../asanas']">List
+    </a>
+    <a class="button" [routerLink]="['../admin']"> Create
+    </a>
+  </div>
+  <div class="row">
+    <div class="card column" *ngFor="let asana of asanas | async">
+      <!-- {{asana | json}} -->
+
+      <div class="text">
+
+        <h5>{{asana.englishName}}</h5>
+        <h5>{{asana.sanskritName}}</h5>
+        <h6>About</h6>
+        <!-- <div class="fab">&#43;</div> -->
+        <p>{{asana.about}}</p>
+
+        <h6>Anatomy</h6>
+        <p><span *ngFor="let anatomy of asana.anatomyy">{{anatomy}}</span></p>
+        <!-- <ul>
+        <h3>Steps</h3>
+        <li *ngFor="let step of asana.steps">{{step}}</li>
+      </ul> -->
+      </div>
+    </div>
+  </div>
+</div>

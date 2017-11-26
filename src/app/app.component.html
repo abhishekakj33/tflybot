@@ -1,27 +1,7 @@
-<div class="container clearfix" id="container"> 
-  <div class="chat">
-    <div class="chat-header clearfix">
-      <img src="../../../assets/bot-icon.png" alt="avatar" />
-      
-      <div class="chat-about">
-        <div class="chat-with">Yogi</div>
-        <div class="chat-num-messages">Helping You being fit.</div>
-      </div>
-      <i class="fa" (click)="muted()" [ngClass]="{ 'fa-volume-up': !mute,
-      'fa-volume-off':  mute }" *ngIf="volSupport"></i>
 
-      <button mat-icon-button  color="primary" [routerLink]="['../admin']">
-        <mat-icon>home</mat-icon>
-      </button>
-    </div>
     <router-outlet></router-outlet>
-     
-     
 
-    </div> <!-- end chat -->
-    
-    </div> <!-- end container -->
-
+   
 <div id="haro_body" *ngIf="!haro">
     <div id="haro_jaw"></div>
     <div id="haro_le"></div>
@@ -31,7 +11,7 @@
     <div id="lid"></div>
     <div id="gas"></div>
   </div>
- <chat-dialog (seeHaro)="seeHaro($event)"></chat-dialog>
+ <!-- <chat-dialog (seeHaro)="seeHaro($event)"></chat-dialog> -->
      
     
 

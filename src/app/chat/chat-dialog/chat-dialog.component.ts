@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, AfterViewChecked, ElementRef, ViewChild, 
 import { FormControl, FormGroup } from '@angular/forms';
 import { ChatService, Message } from '../chat.service';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/scan';
+import  'rxjs/add/operator/scan';
 import { SpeechService } from '../../speech.service';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 

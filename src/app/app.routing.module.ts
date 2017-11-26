@@ -10,6 +10,10 @@ const appRoutes: Routes = [
     loadChildren: 'app/admin/admin.module#AdminModule',
   },
   {
+    path: 'asanas',
+    loadChildren: 'app/asanas/asanas.module#AsanasModule',
+  },
+  {
     path: 'login',
     loadChildren: 'app/auth/auth.module#AuthModule',
   }
