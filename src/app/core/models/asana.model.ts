@@ -10,7 +10,13 @@ export class Asana {
     date: Date
     step: AsanaSteps
     steps: AsanaSteps[];
+    benefits:any;
     anatomies:any;
+    anatomiesTags:any;
+    ailments:any;
+    ailmentsTags:any;
+    contraindications:any;
+    contraindicationsTags:any;
     totalVotesCount?: number = 0;
 }
 

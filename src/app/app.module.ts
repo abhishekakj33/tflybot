@@ -5,6 +5,9 @@ import { AngularFireModule } from 'angularfire2';
 import {  AngularFirestoreModule} from 'angularfire2/firestore';
 import { environment } from '../environments/environment';
 
+import { TagInputModule } from 'ngx-chips';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
+
 import { AppComponent } from './app.component';
 import { AsanasModule } from './asanas/asanas.module';
 import { ChatModule } from './chat/chat.module';
@@ -19,6 +22,7 @@ import { AppRoutingModule } from './app.routing.module';
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    TagInputModule, BrowserAnimationsModule,
     AppRoutingModule,
     ChatModule,
     AdminModule,

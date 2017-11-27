@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 //import { AuthService } from '../../../core/services/auth/auth.service';
 //import { PollService } from '../../../core/services/poll/poll.service';
-import { Asana , AsanaSteps, AsanaOption} from '../../../core/models/asana.model';
+import { Asana, AsanaSteps, AsanaOption } from '../../../core/models/asana.model';
 
 @Component({
   selector: 'asanas',
@@ -14,22 +14,22 @@ import { Asana , AsanaSteps, AsanaOption} from '../../../core/models/asana.model
   styleUrls: ['./asanas.component.css']
 })
 export class AsanasComponent implements OnInit {
-  private asanasCollection: AngularFirestoreCollection<any>;
+  public asanasCollection: AngularFirestoreCollection<any>;
   asanas: Observable<any[]>;
   user: any;
   public submitted: boolean; // keep track on whether form is submitted
-   asana: Observable<any>;
-   asanaForm: FormGroup;
-  
+  asana: Observable<any>;
+  asanaForm: FormGroup;
 
-  constructor(private afs: AngularFirestore,private fb: FormBuilder,private router: Router, private route: ActivatedRoute) {
-    this.asanasCollection = afs.collection<any>('items');
+
+  constructor(public afs: AngularFirestore, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
+    this.asanasCollection = afs.collection<any>('asanas');
     this.asanas = this.asanasCollection.valueChanges();
   }
 
 
   ngOnInit() {
-    
+
 
     this.createAsanaForm()
 
@@ -38,31 +38,36 @@ export class AsanasComponent implements OnInit {
   createAsanaForm(asana?: Asana): void {
 
     let sanskritName = asana ? asana.sanskritName : '',
-    englishName = asana ? asana.englishName : '',
-    about = asana ? asana.about : ''
+      englishName = asana ? asana.englishName : '',
+      about = asana ? asana.about : ''
 
-
+    let benefits: FormArray = this.fb.array([]);
     let anatomies: FormArray = this.fb.array([]);
     let steps: FormArray = this.fb.array([]);
     let ailments: FormArray = this.fb.array([]);
-
+    let contraindications: FormArray = this.fb.array([]);
+    
     let options: FormArray = this.fb.array([]);
 
     this.asanaForm = this.fb.group({
       sanskritName: sanskritName,
-      englishName:englishName,
-      about:about,
+      englishName: englishName,
+      about: about,
       steps: steps,
-      ailments:ailments,
-      anatomies:anatomies
+      ailments: ailments,
+      contraindications:contraindications,
+      benefits: benefits,
+      anatomies: anatomies
     });
 
-     if (!asana) {
+    if (!asana) {
       this.addAnatomy();
       this.addStep();
       this.addAilment();
-     }
-    
+      this.addBenefit();
+      this.addC();
+    }
+
 
   }
 
@@ -80,17 +85,43 @@ export class AsanasComponent implements OnInit {
 
   addStep(steps?: any) {
     let step = steps ? steps.step : ''
-    this.steps.push(this.initAnatomy(step));
+    this.steps.push(this.initStep(step));
   }
-  stepFocussed(stepIndex,noOfOptions){
+  stepFocussed(stepIndex, noOfOptions) {
     if (stepIndex == (noOfOptions - 1)) {
-    this.addStep(stepIndex)
+      this.addStep(stepIndex)
     }
   }
-  removeStep(i){
+  removeStep(i) {
     this.steps.removeAt(i);
   }
 
+
+
+
+  get benefits(): FormArray {
+    return this.asanaForm.get('benefits') as FormArray;
+  };
+
+  initBenefit(benefit) {
+    return this.fb.group({
+      benefit: [benefit]
+    });
+  }
+
+
+  addBenefit(benefits?: any) {
+    let benefit = benefits ? benefits.benefit : ''
+    this.benefits.push(this.initBenefit(benefit));
+  }
+  benefitFocussed(index, noOfOptions) {
+    if (index == (noOfOptions - 1)) {
+      this.addBenefit(index)
+    }
+  }
+  removeBenefit(i) {
+    this.benefits.removeAt(i);
+  }
 
 
 
@@ -110,18 +141,16 @@ export class AsanasComponent implements OnInit {
 
   addAilment(ailments?: any) {
     let ailment = ailments ? ailments.ailment : ''
-    this.ailments.push(this.initAnatomy(ailment));
+    this.ailments.push(this.initAilment(ailment));
   }
-  ailmentFocussed(ailmentIndex,noOfOptions){
+  ailmentFocussed(ailmentIndex, noOfOptions) {
     if (ailmentIndex == (noOfOptions - 1)) {
-    this.addAilment(ailmentIndex)
+      this.addAilment(ailmentIndex)
     }
   }
-  removeAilment(i){
+  removeAilment(i) {
     this.ailments.removeAt(i);
   }
-
-
 
 
 
@@ -140,29 +169,67 @@ export class AsanasComponent implements OnInit {
     let anatomy = anatomies ? anatomies.anatomy : ''
     this.anatomies.push(this.initAnatomy(anatomy));
   }
-  anatomyFocussed(anatomyIndex,noOfOptions){
+  anatomyFocussed(anatomyIndex, noOfOptions) {
     if (anatomyIndex == (noOfOptions - 1)) {
-    this.addAnatomy(anatomyIndex)
+      this.addAnatomy(anatomyIndex)
     }
   }
-  removeAnatomy(i){
+  removeAnatomy(i) {
     this.anatomies.removeAt(i);
+  }
+  
+  get contraindications(): FormArray {
+    return this.asanaForm.get('contraindications') as FormArray;
+  };
+
+  initC(contraindication) {
+    return this.fb.group({
+      contraindication: [contraindication]
+    });
   }
 
 
-  saveAsanaEvent(asana: Asana, isValid: boolean, state) {
-    if(!isValid) return;
-    
-    this.submitted = true;
-    asana.authorUID = this.user.uid;
-    asana.author = this.user.displayName;
-    asana.authorImageUrl = this.user.photoURL
+  addC(contraindications?: any) {
+    let contraindication = contraindications ? contraindications.anatomy : ''
+    this.contraindications.push(this.initC(contraindication));
+  }
+  cFocussed(ndex, noOfOptions) {
+    if (ndex == (noOfOptions - 1)) {
+      this.addC(ndex)
+    }
+  }
+  removeC(i) {
+    this.contraindications.removeAt(i);
+  }
 
+
+  saveAsanaEvent(asana: Asana, isValid: boolean) {
+   // if (!isValid) return;
+
+   // this.submitted = true;
+    // asana.authorUID = this.user.uid;
+    // asana.author = this.user.displayName;
+    // asana.authorImageUrl = this.user.photoURL
+    asana.anatomiesTags = {};
+    asana.anatomies.forEach(element => {
+      asana.anatomiesTags[element.anatomy] = true
+    });
+    
+    asana.ailmentsTags = {};
+    asana.ailments.forEach(element => {
+      asana.ailmentsTags[element.ailment] = true
+    });
+    asana.contraindicationsTags = {}
+    asana.contraindications.forEach(element => {
+      asana.contraindicationsTags[element.contraindication] = true
+    });
+    
     this.asanasCollection.add(asana);
+
 
   }
   deleteAsana(asana: Asana) {
-   
+
   }
   ngOnDestroy() {
     //this.redirectToEdit.unsubscribe();

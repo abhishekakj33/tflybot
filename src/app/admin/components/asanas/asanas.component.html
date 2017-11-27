@@ -29,32 +29,52 @@
             <label for="nameField">Steps List</label>
           <div class="a-input-list" *ngFor="let step of steps.controls; let i=index" [formGroupName]="i">
   
-            <input type="text" placeholder="Step {{i+1}}" formControlName="step" (focus)="stepFocussed(i,anatomies.controls.length)">
+            <input type="text" placeholder="Step {{i+1}}" formControlName="step" (focus)="stepFocussed(i,steps.controls.length)">
             <span (click)="removeStep(i)" class="a-cross">
                 <i class="fa fa-times" aria-hidden="true"></i>
             </span>
           </div>
         </div>
+        <div formArrayName="benefits">
+          <label for="nameField">Benefits List</label>
+        <div class="a-input-list" *ngFor="let benefit of benefits.controls; let i=index" [formGroupName]="i">
+
+          <input type="text" placeholder="Benefit {{i+1}}" formControlName="benefit" (focus)="benefitFocussed(i,benefits.controls.length)">
+          <span (click)="removeBenefit(i)" class="a-cross">
+              <i class="fa fa-times" aria-hidden="true"></i>
+          </span>
+        </div>
+      </div>
         <div formArrayName="anatomies">
           <label for="nameField">Anatomy List</label>
         <div class="a-input-list" *ngFor="let anatomy of anatomies.controls; let i=index" [formGroupName]="i">
 
           <input type="text" placeholder="Anatomy {{i+1}}" formControlName="anatomy" (focus)="anatomyFocussed(i,anatomies.controls.length)">
           <span (click)="removeAnatomy(i)" class="a-cross">
-              <i class="fa fa-times" aria-hidden="true"></i>
+              <i class="fa fa-times" aria-hidd  en="true"></i>
           </span>
         </div>
       </div>
       <div formArrayName="ailments">
-          <label for="nameField">Anatomy List</label>
+          <label for="nameField">Ailment List</label>
         <div class="a-input-list" *ngFor="let ailment of ailments.controls; let i=index" [formGroupName]="i">
 
-          <input type="text" placeholder="Ailment {{i+1}}" formControlName="ailment" (focus)="ailmentFocussed(i,anatomies.controls.length)">
+          <input type="text" placeholder="Ailment {{i+1}}" formControlName="ailment" (focus)="ailmentFocussed(i,ailments.controls.length)">
           <span (click)="removeAilment(i)" class="a-cross">
               <i class="fa fa-times" aria-hidden="true"></i>
           </span>
         </div>
       </div>
+      <div formArrayName="contraindications">
+        <label for="nameField">Avoid List</label>
+      <div class="a-input-list" *ngFor="let c of contraindications.controls; let i=index" [formGroupName]="i">
+
+        <input type="text" placeholder="Contraindication {{i+1}}" formControlName="contraindication" (focus)="cFocussed(i,contraindications.controls.length)">
+        <span (click)="removeC(i)" class="a-cross">
+            <i class="fa fa-times" aria-hidden="true"></i>
+        </span>
+      </div>
+    </div>
       <!-- <div formArrayName="ailments">
             
         </div>
@@ -69,16 +89,20 @@
       </mat-toolbar> -->
 
     </div>
+    <div class="a-button-group">
+      <a class="button"   (click)="saveAsanaEvent(asanaForm.value,asanaForm.valid)"> Save
+      </a>
+      </div>
   </div>
 
 
 
 
-  <div class="margin-20">
+  <!-- <div class="margin-20">
     <div>myForm details:-</div>
     <pre>Is myForm valid?: <br>{{asanaForm.valid | json}}</pre>
     <pre>Is myForm submitted?: <br>{{submitted | json}}</pre>
     <pre>myForm value: <br>{{asanaForm.value | json}}</pre>
-  </div>
+  </div> -->
 
 </form>

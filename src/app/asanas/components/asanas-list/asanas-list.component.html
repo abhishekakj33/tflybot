@@ -19,7 +19,13 @@
         <p>{{asana.about}}</p>
 
         <h6>Anatomy</h6>
-        <p><span *ngFor="let anatomy of asana.anatomyy">{{anatomy}}</span></p>
+        <p><span *ngFor="let anatomy of asana.anatomies">{{anatomy.anatomy}}</span></p>
+
+        <h6>Ailments</h6>
+        <p><span *ngFor="let ailment of asana.ailments">{{ailment.ailment}}</span></p>
+
+        <h6>Avoid if suffering from</h6>
+        <p><span *ngFor="let contraindication of asana.contraindications">{{contraindication.contraindication}}</span></p>
         <!-- <ul>
         <h3>Steps</h3>
         <li *ngFor="let step of asana.steps">{{step}}</li>
