@@ -43,7 +43,8 @@ export class AsanasComponent implements OnInit {
 
 
     let anatomies: FormArray = this.fb.array([]);
-    ////let steps: FormArray = this.fb.array([]);
+    let steps: FormArray = this.fb.array([]);
+    let ailments: FormArray = this.fb.array([]);
 
     let options: FormArray = this.fb.array([]);
 
@@ -51,16 +52,78 @@ export class AsanasComponent implements OnInit {
       sanskritName: sanskritName,
       englishName:englishName,
       about:about,
-    //  steps: steps,
+      steps: steps,
+      ailments:ailments,
       anatomies:anatomies
     });
 
      if (!asana) {
       this.addAnatomy();
+      this.addStep();
+      this.addAilment();
      }
     
 
   }
+
+
+  get steps(): FormArray {
+    return this.asanaForm.get('steps') as FormArray;
+  };
+
+  initStep(step) {
+    return this.fb.group({
+      step: [step]
+    });
+  }
+
+
+  addStep(steps?: any) {
+    let step = steps ? steps.step : ''
+    this.steps.push(this.initAnatomy(step));
+  }
+  stepFocussed(stepIndex,noOfOptions){
+    if (stepIndex == (noOfOptions - 1)) {
+    this.addStep(stepIndex)
+    }
+  }
+  removeStep(i){
+    this.steps.removeAt(i);
+  }
+
+
+
+
+
+
+
+  get ailments(): FormArray {
+    return this.asanaForm.get('ailments') as FormArray;
+  };
+
+  initAilment(ailment) {
+    return this.fb.group({
+      ailment: [ailment]
+    });
+  }
+
+
+  addAilment(ailments?: any) {
+    let ailment = ailments ? ailments.ailment : ''
+    this.ailments.push(this.initAnatomy(ailment));
+  }
+  ailmentFocussed(ailmentIndex,noOfOptions){
+    if (ailmentIndex == (noOfOptions - 1)) {
+    this.addAilment(ailmentIndex)
+    }
+  }
+  removeAilment(i){
+    this.ailments.removeAt(i);
+  }
+
+
+
+
 
   get anatomies(): FormArray {
     return this.asanaForm.get('anatomies') as FormArray;
