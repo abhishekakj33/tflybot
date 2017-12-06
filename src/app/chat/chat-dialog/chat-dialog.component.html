@@ -18,7 +18,7 @@
         <ul>
           <li class="clearfix" *ngFor="let message of messages | async">
             <div class="message-data" [ngClass]="{ 'align-right': message.sentBy === 'bot'}">
-              <span class="message-data-time">10:10 AM, Today</span> &nbsp; &nbsp;
+              <span class="message-data-time">{{message.time | date:'shortTime'}}, Today</span> &nbsp; &nbsp;
               <span class="message-data-name" *ngIf="message.sentBy === 'user'">
                 <i class="fa fa-circle me"></i>You</span>
               <span class="message-data-name" *ngIf="message.sentBy === 'bot'">
@@ -28,6 +28,20 @@
           'my-message':   message.sentBy === 'user' }">
               {{ message.content }}
             </div>
+
+            <table *ngIf="message.asana">
+              <thead>
+                <!-- <tr>
+                  <th > {{message.content}}</th>
+                </tr> -->
+              </thead>
+              <tbody>
+                 <tr *ngFor="let step of message.asana">
+                  <td>{{step.step}}</td>     
+                </tr> 
+               
+              </tbody>
+            </table>
           </li>
 
         </ul>
@@ -36,7 +50,7 @@
       <!-- end chat-history -->
 
       <div class="chat-message clearfix chat-footer">
-        <input formControlName="userMsg" (keyup.enter)="sendMessage()" type="text" name="message-to-send" id="message-to-send" placeholder="Flight onboarding queries.">
+        <input formControlName="userMsg" (keyup.enter)="sendMessage()" type="text" name="message-to-send" id="message-to-send" placeholder="Anything about yoga.">
         <span  (click)="talk()" class="microphone" *ngIf="speechRecog">
           <i class="fa" aria-hidden="true" [ngClass]="{ 'fa-microphone-slash': !talking,
             'fa-microphone':  talking }" *ngIf="!userTextAvailability"></i>

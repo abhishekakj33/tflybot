@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 export class Message {
-  constructor(public content: string, public sentBy: string) { }
+  constructor(public content: string, public sentBy: string,public time: any,public asana:any) { }
 }
 
 export interface IWindow extends Window {
@@ -29,16 +29,17 @@ export class ChatService {
 
   // Sends and receives messages via DialogFlow
   converse(msg: string, mute: boolean, audio: boolean) {
-    const userMessage = new Message(msg, 'user');
+    let time = new Date().getTime()
+    const userMessage = new Message(msg, 'user',time,[]);
     if (msg == 'info_blocked') {
-      const botMessage = new Message('Microphone has been blocked.', 'bot');
-      this.update(botMessage, false, audio);
+      const botMessage = new Message('Microphone has been blocked.', 'bot',time,[]);
+      this.update(botMessage, false, audio,[]);
     } else if (msg == 'info_speak_now') {
-      const botMessage = new Message('You can Speak with me now.', 'bot');
-      this.update(botMessage, false, audio);
+      const botMessage = new Message('You can Speak with me now.', 'bot',time,[]);
+      this.update(botMessage, false, audio,[]);
     }
     else {
-      this.update(userMessage, false, audio);
+      this.update(userMessage, false, audio,[]);
     }
 
     if (msg != 'info_blocked') {
@@ -46,20 +47,30 @@ export class ChatService {
         .then(res => {
           console.log("res dialogflow",res)
           const speech = res.result.fulfillment.speech;
-          const botMessage = new Message(speech, 'bot');
+          const asana:any = res.result.fulfillment
+          if(asana.messages[0]){
+  if(asana.messages[0].payload){
+            var steps =   asana.messages[0].payload.steps
+          }else {
+             steps =   []
+          }
+
+          }
+        
+          const botMessage = new Message(speech, 'bot',time,steps);
           if (audio) {
-            this.update(botMessage, mute, audio);
+            this.update(botMessage, mute, audio,[]);
           } else {
-            this.update(botMessage, mute, audio);
+            this.update(botMessage, mute, audio,[]);
           }
         }, (error) => {
-          new Message('Not able to connect to server', 'bot');
+          new Message('Not able to connect to server', 'bot',time,[]);
         });
     }
   }
 
   // Adds message to source
-  update(msg: Message, mute: boolean, audio: boolean) {
+  update(msg: Message, mute: boolean, audio: boolean,asana:any) {
 
     if (msg.sentBy == 'bot' && !mute) {
       let utterance = new SpeechSynthesisUtterance(msg.content);

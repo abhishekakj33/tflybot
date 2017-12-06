@@ -26,11 +26,12 @@ export class ChatDialogComponent implements OnInit, OnDestroy {
     userMsg: new FormControl()
   });
   talking: boolean = false;
-  mute: boolean = false;
+  mute: boolean = true;
   disableScrollDown = false;
   userTextAvailability = false;
   volSupport = true;
-  speechRecog = true
+  speechRecog = true;
+  time = new Date().getTime();
   constructor(public chat: ChatService, public speech: SpeechService) { }
 
   ngOnInit() {

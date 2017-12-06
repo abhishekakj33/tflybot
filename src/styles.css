@@ -84,6 +84,9 @@ body {
   height: 84vh;
   overflow-y: auto;
   scroll-behavior: smooth;
+} 
+.chat-history ul {
+  list-style: none;
 }
 .chat .chat-history .message-data {
   margin-bottom: 15px;
